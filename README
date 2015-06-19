@@ -1,7 +1,8 @@
 ---------------------------OVERVIEW--------------------------
 1. startup.ino-Basic control for motors of iRobot
 2. test.c-Distance analysis code for bananapi
-3. test.sh-run the test
+3. test.sh-Run the test
+4. test_thread.c-Thread version for bananapi
 ---------------------------GUIDELINE-------------------------
 For everyone in this project, doc format is here:
 date
@@ -39,7 +40,7 @@ The distance is sometimes to lead 0.
 It seem some errors on system.
 
 6/15
-For mopplayer - combine arduino to bananapi
+For mopplayer - Combine arduino to bananapi
 Done.
 Beta version release.
 ISSIUE:
@@ -47,10 +48,14 @@ The current overhead will damage the board.
 Using two port to supply the power.
 
 6/19
-For mopplayer - turn left and right
+For mopplayer - Turning left and right
 Done.
 1.0 release.
 ISSIUE:
 This car is poor to perform turning direction perfectly
 ,due to its hardware design.
 
+6/20
+For mopplayer - Thread version
+Done.
+2.0 release.
