@@ -110,6 +110,105 @@ void stop(int in1,int in2,int in3,int in4,int in5,int in6,int in7,int in8)
     digitalWrite(in8,LOW);
 }
 
+struct region{
+        char up=0;
+        char left=0; 
+        char right=0;
+        char back=0;
+        char state = 0; //0=unknown 1=free 2=obstacle;
+};
+
+typedef struct car{
+        volatile float x;// car position
+        volatile float y;
+        char mode;          // running mode,0:first run
+        char direction; // 0:North 1:East 2:South 3:West
+}CAR;
+
+void detect(){
+        unsigned int timeLeft,timeRight,timeLLeft,timeRRight;
+
+        trigger(0);
+        timeLeft = pulseIn(1,HIGH,500000);
+        currentLeft = distance(timeLeft);
+                                 
+        trigger(2);  
+        timeRight = pulseIn(3,HIGH,500000);
+        currentRight = distance(timeRight);
+
+        trigger(4);
+        timeLLeft = pulseIn(5,HIGH,500000);
+        currentLLeft = distance(timeLLeft);
+                                                                    
+        trigger(6);  
+        timeRRight = pulseIn(7,HIGH,500000);
+        currentRRight = distance(timeRRight);
+                                                                                        
+}
+
+void init(){
+        car.x=1;
+        car.y=1;
+        car.direction = 0;
+        map[0][0].state = free;
+        int i,j;
+        for(i=0;i<X;i++){
+                for(j=0;j<Y;j++){
+                         if(j==0||i==0||i==X||j=={
+                                map[i][j] = 2;                                                                                  }
+                                                                                                
+                }
+        }
+}
+
+void update_map(CAR car){
+        //¶ZÂ´«º⦨³æ
+        unsigned int Leftunit = currentLeft/unit;
+        unsigned int Rightunit = currentRight/unit;
+        unsigned int LLeftunit = currentLLeft/unit;
+        unsigned int RRightunit = currentRRight/unit;
+        unsigned int Frontunit;
+
+        //§PÂ«e¤襪or¥k¸û¨ú
+        if(rightunit>leftunit)  
+                Frontunit = Leftunit;
+        else
+                Frontunit = Rightunit;
+
+        //®ھڳæ¡A¨M©w«e«ᥪ¥kstate
+        if(Leftunit==0 && currentLLeft!=0)      //currentLLeft=0 ¶W¹L¥i´ú½d³òí¤U­ӳæµL»Ùªª«
+                map[car.x][car.y].left = 2;
+        else
+                map[car.x][car.y].left = 1;
+
+        if(Rightunit==0 && currentRRight!=0)
+                map[car.x][car.y].right = 2;
+        else
+                map[car.x][car.y].right = 1;
+
+        if(Frontunit==0 && (currentLeft!=0 || currentRight!=0))
+                map[car.x][car.y].up = 2;
+        else
+                map[car.x][car.y].up = 1;
+
+        if(car.direction==0)
+                map[car.x][car.y].back = map[car.x][car.y-1].state;
+        else if(car.direction==2)
+                map[car.x][car.y].back = map[car.x][car.y+1].state;
+}
+
+        //globalÅ¼Æ
+        unsigned int unit 1 ;                   //³æ¤j¤p
+        volatile unsigned int currentLeft,currentRight,currentLLeft,currentRRight;
+
+        CAR car;
+
+        int X 256;
+        int Y 128;      
+        struct region map[X][Y];
+
+
+
 int main (void)
 {
   wiringPiSetup () ;
