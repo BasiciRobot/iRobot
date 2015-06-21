@@ -2,55 +2,31 @@
 #include <stdlib.h>
 #include "map.h"
 #include "move.h"
-unsigned int count=0;
-unsigned int currentLeft,currentRight,currentLLeft,currentRRight;
+#define DISTANCE 360
 
+unsigned int count=0, direction=0;
+unsigned int currentRight, currentRFront, currentLeft, currentLFront;
 /*dimension
 Width: 16 cm
 Length: 24 cm
 ratio 2:3
 */
 
-void trigger(int pin)
-{
-    digitalWrite (pin, HIGH) ;
-    delayMicroseconds (20) ;
-    digitalWrite (pin,  LOW) ;
-}
 
-unsigned int pulseIn(int pin, unsigned int timeout)
-{
-    unsigned int wait=micros();
-    for(;;)
-    {
-        if (micros() - wait >= timeout)
-        {
-            count++;
-            return 0;
-        }
-        else if (digitalRead(pin) == HIGH)
-        {
-            unsigned int start=micros();
-            for(;;)
-            {
-                if (digitalRead(pin) != HIGH)
-                {
-                    return micros()-start;
-                }
-            }
-        }
-    }
+void init(){
+    car.x=1;
+    car.y=1;
+    mode=0;
+    car.direction = UP;
+    car.turn = NONE;
+    for(i=0;i<256;i++)
+        for(j=0;j<256;j++)car.map[i][j]=UNKNOWN;
 }
-
-unsigned int distance(unsigned int t)
-{
-    return t*34/200;
-}
-
 
 int main (void)
 {
-    wiringPiSetup () ;
+    wiringPiSetup();
+    init();
     pinMode (0, OUTPUT) ;//Ultrasonic 1
     pinMode (1, INPUT) ;
     pinMode (2, OUTPUT) ;//Ultrasonic 2
@@ -60,72 +36,119 @@ int main (void)
     pinMode (6, OUTPUT) ;//Ultrasonic 4
     pinMode (7, INPUT) ;
 
-    pinMode (8,OUTPUT);//RightMotor 1
+    pinMode (8,OUTPUT);//Motor 1
     pinMode (9,OUTPUT);
-    pinMode (10,OUTPUT);//Left Motor 2
+    pinMode (10,OUTPUT);//Motor 2
     pinMode (11,OUTPUT);
-    pinMode (12,OUTPUT);//Right Motor 3
+    pinMode (12,OUTPUT);//Motor 3
     pinMode (13,OUTPUT);
-    pinMode (14,OUTPUT);//Left Motor 4
+    pinMode (14,OUTPUT);//Motor 4
     pinMode (15,OUTPUT);
-    move(NONE);
+    stop();
 
     for(;;)
     {
-        unsigned int timeLeft,timeRight,timeLLeft,timeRRight;
-        unsigned int distLeft,distRight,distLLeft,distRRight;
-
-        trigger(0);
-        timeLeft = pulseIn(1,500000);
-        distLeft = distance(timeLeft);
-        if(distLeft >0)
-        {
-            currentLeft=distLeft;
+        
+        detect();
+        //updatemap();
+        //planpath();
+        //move();
+        if(car.turn!=NONE){}
+        else{
+            if (currentLFront > DISTANCE && currentRFront > DISTANCE)
+            {
+                car.map[car.x][car.y] |= UPFREE;   
+            }
+            else if(currentLFront <= DISTANCE && currentRFront <= DISTANCE)
+            {
+                if (currentLeft > DISTANCE && currentRight > DISTANCE)
+                {
+                        switch (car.turn)
+                        {
+                            case RIGHT:
+                            turnLeft();                    
+                            break;
+                            case LEFT:
+                            turnRight();
+                            break;
+                            default:
+                            turnRight();
+                        }
+                }
+                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
+                {
+                    moveBackward();
+                }
+                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
+                {
+                    turnRight();
+                }
+                else
+                {
+                    turnLeft();
+                }
+            }
+            else if (currentLFront <= DISTANCE && currentRFront > DISTANCE)
+            {
+                if (currentLeft > DISTANCE && currentRight > DISTANCE)
+                {
+                        switch (car.turn)
+                        {
+                            case RIGHT:
+                            turnLeft();
+                            break;
+                            case LEFT:
+                            turnRight();
+                            break;
+                            default:
+                            turnRight();
+                        }
+                }
+                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
+                {
+                    moveBackward();   
+                }
+                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
+                {
+                    turnRight();
+                }
+                else
+                {
+                    turnLeft();
+                }
+            }
+            else
+            {
+                if (currentLeft > DISTANCE && currentRight > DISTANCE)
+                {
+                        switch (car.turn)
+                        {
+                            case RIGHT:
+                            turnLeft();
+                            break;
+                            case LEFT:
+                            turnRight();
+                            break;
+                            default:
+                            turnRight();
+                        }
+                }
+                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
+                {
+                    moveBackward();
+                }
+                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
+                {
+                    turnRight();
+                }
+                else
+                {
+                    turnLeft();
+                }
+            }
         }
-
-        trigger(2);  
-        timeRight = pulseIn(3,500000);
-        distRight = distance(timeRight);
-        if(distRRight >0)
-        {
-            currentRight=distRight;
-        }
-
-        trigger(4);
-        timeLLeft = pulseIn(5,500000);
-        distLLeft = distance(timeLLeft);
-        if(distLLeft >0)
-        {
-            currentLLeft=distLLeft;
-        }
-
-        trigger(6);  
-        timeRRight = pulseIn(7,500000);
-        distRRight = distance(timeRRight);
-        if(distRRight >0)
-        {
-            currentRRight=distRRight;
-        }
-        else()//need to deal with this situation
-
-        if(currentLeft<=240 && currentRight <=240 && currentRFront <=240 && currentLFront <=240)
-        {
-            move(DOWN);
-        }
-        else if (currentLFront>240 && currentRFront >240)
-        {
-            move(UP);         
-        }
-        else if (currentLFront<=240 && currentRight >240)
-        {
-            move(RIGHT);
-        }
-        else if (currentRFront<=240 && currentLeft >240)
-        {
-            move(LEFT);
-        }
-        printf("distLeft: %d distRight: %d count zero: %d\n",distLeft,distRight,count);
-        delay (1000);
+        printf("distLFront: %d distRFront: %d distLeft: %d distRight: %d count zero: %d\n",distLFront,distRFront,distLeft,distRight,count);
+        delay(100); 
     }
     return 0 ;
 }
