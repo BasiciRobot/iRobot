@@ -1,19 +1,28 @@
 
 #define UNKNOWN 0
-#define FREE  1
-#define UPFREE    FREE << 0
-#define DOWNFREE  FREE << 1
-#define LEFTFREE  FREE << 2
-#define RIGHTFREE FREE << 3
-#define WALL      FREE << 4
-#define FULL      FREE << 5
-#define VISITED   FREE << 6
+#define UPFREE    1 << 0
+#define DOWNFREE  1 << 1
+#define LEFTFREE  1 << 2
+#define RIGHTFREE 1 << 3
+#define UPWALL    ~UPFREE
+#define DOWNWALL  ~DOWNFREE
+#define LEFTWALL  ~LEFTFREE
+#define RIGHTWALL ~RIGHTFREE
+#define FREE      1 << 4
+#define FULL      ~(1 << 5)
+#define VISITED   1 << 6
 enum{
+    NONE,
     UP,
     DOWN,
     LEFT,
     RIGHT,
-    NONE
+    BACK
+}
+enum{
+    FIRSTSWEEP,
+    SECONDSWEEP,
+    CLEAN
 }
 struct CAR{
     int x;   // car position
@@ -32,26 +41,13 @@ void init();
 void detect();
 void updatemap();
 void planpath();
-
-void planpath(){
-    if(car.mode == FIRSTSWEEP)
-        if(car.direction == UP) { 
-            if(!(car.map[car.x][car.y] & UPFREE)) {
-                car.turn = RIGHT;    
-            }
-        }
-        else if(car.direction == DOWN) { 
-            if(!(car.map[car.x][car.y] & DOWNFREE)) {
-                car.turn = LEFT;        
-            }   
-        }
-        else if(car.direction == RIGHT) {
-            if(!(car.map[car.x][car.y] & UPFREE) && !(car.map[car.x][car.y] & DOWNFREE)) 
-                car.turn = NONE;
-            else
-                car.turn = LEFT; 
-        }    
-    else if(car.mode == SECONDSWEEP){}
-    else if(car.mode == CLEAN){}
-
-}    
+void outputmap(){
+    FILE *fptr;
+    fptr = fopen("carmap", "w");
+    if(!fptr){
+        return;
+    }
+    int i,j;
+    for(i=0;i<256;i++)for(j=0;j<256;j++)fprintf(fptr,"%c\n",car.map[i][j]);
+    exit(1);
+}

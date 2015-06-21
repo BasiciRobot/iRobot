@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "map.h"
 #include "move.h"
+#include "planpath.h"
+#include "detect.h"
+#include "updatemap.h"
 #define DISTANCE 360
 
 unsigned int count=0, direction=0;
@@ -14,19 +17,8 @@ ratio 2:3
 
 
 void init(){
-    car.x=1;
-    car.y=1;
-    mode=0;
-    car.direction = UP;
-    car.turn = NONE;
-    for(i=0;i<256;i++)
-        for(j=0;j<256;j++)car.map[i][j]=UNKNOWN;
-}
 
-int main (void)
-{
     wiringPiSetup();
-    init();
     pinMode (0, OUTPUT) ;//Ultrasonic 1
     pinMode (1, INPUT) ;
     pinMode (2, OUTPUT) ;//Ultrasonic 2
@@ -45,110 +37,32 @@ int main (void)
     pinMode (14,OUTPUT);//Motor 4
     pinMode (15,OUTPUT);
     stop();
+    car.x=1;
+    car.y=1;
+    mode=0;
+    car.direction = UP;
+    car.turn = NONE;
+    for(i=0;i<256;i++)
+        for(j=0;j<256;j++)car.map[i][j]=UNKNOWN;
+}
 
+int main (void)
+{
+    init();
+    static unsigned char times = 0;
     for(;;)
     {
-        
+        unsigned int start = millis();
         detect();
-        //updatemap();
-        //planpath();
-        //move();
-        if(car.turn!=NONE){}
-        else{
-            if (currentLFront > DISTANCE && currentRFront > DISTANCE)
-            {
-                car.map[car.x][car.y] |= UPFREE;   
-            }
-            else if(currentLFront <= DISTANCE && currentRFront <= DISTANCE)
-            {
-                if (currentLeft > DISTANCE && currentRight > DISTANCE)
-                {
-                        switch (car.turn)
-                        {
-                            case RIGHT:
-                            turnLeft();                    
-                            break;
-                            case LEFT:
-                            turnRight();
-                            break;
-                            default:
-                            turnRight();
-                        }
-                }
-                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
-                {
-                    moveBackward();
-                }
-                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
-                {
-                    turnRight();
-                }
-                else
-                {
-                    turnLeft();
-                }
-            }
-            else if (currentLFront <= DISTANCE && currentRFront > DISTANCE)
-            {
-                if (currentLeft > DISTANCE && currentRight > DISTANCE)
-                {
-                        switch (car.turn)
-                        {
-                            case RIGHT:
-                            turnLeft();
-                            break;
-                            case LEFT:
-                            turnRight();
-                            break;
-                            default:
-                            turnRight();
-                        }
-                }
-                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
-                {
-                    moveBackward();   
-                }
-                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
-                {
-                    turnRight();
-                }
-                else
-                {
-                    turnLeft();
-                }
-            }
-            else
-            {
-                if (currentLeft > DISTANCE && currentRight > DISTANCE)
-                {
-                        switch (car.turn)
-                        {
-                            case RIGHT:
-                            turnLeft();
-                            break;
-                            case LEFT:
-                            turnRight();
-                            break;
-                            default:
-                            turnRight();
-                        }
-                }
-                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
-                {
-                    moveBackward();
-                }
-                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
-                {
-                    turnRight();
-                }
-                else
-                {
-                    turnLeft();
-                }
-            }
+        if(times == 0){
+            updatemap();
+            planpath();
+            move();
         }
+        else if(times == 4) times = 0;
+        else times++;
         printf("distLFront: %d distRFront: %d distLeft: %d distRight: %d count zero: %d\n",distLFront,distRFront,distLeft,distRight,count);
-        delay(100); 
+        delay(100 + start - millis()); 
     }
     return 0 ;
 }

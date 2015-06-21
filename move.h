@@ -60,121 +60,26 @@ void stop()
 }
 
 void move(){
-
-        if(car.turn!=NONE){}
-        else{
-            if (currentLFront > DISTANCE && currentRFront > DISTANCE)
-            {
-                
-                car.map[car.x][car.y] |= UPFREE;
-                if (currentLeft > DISTANCE && currentRight > DISTANCE)
-                {
-                    moveForward();            
-                }
-                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
-                {
-                    moveForward();            
-                }
-                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
-                {
-                    turnRight();            
-                    car.turn = RIGHT;
-                }
-                else
-                {
-                    turnLeft();            
-                    car.turn = LEFT;
-                }
-            }
-            else if(currentLFront <= DISTANCE && currentRFront <= DISTANCE)
-            {
-                if (currentLeft > DISTANCE && currentRight > DISTANCE)
-                {
-                        switch (car.turn)
-                        {
-                            case RIGHT:
-                            turnLeft();                    
-                            break;
-                            case LEFT:
-                            turnRight();
-                            break;
-                            default:
-                            turnRight();
-                        }
-                }
-                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
-                {
-                    moveBackward();
-                }
-                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
-                {
-                    turnRight();
-                }
-                else
-                {
-                    turnLeft();
-                }
-            }
-            else if (currentLFront <= DISTANCE && currentRFront > DISTANCE)
-            {
-                if (currentLeft > DISTANCE && currentRight > DISTANCE)
-                {
-                        switch (car.turn)
-                        {
-                            case RIGHT:
-                            turnLeft();
-                            break;
-                            case LEFT:
-                            turnRight();
-                            break;
-                            default:
-                            turnRight();
-                        }
-                }
-                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
-                {
-                    moveBackward();   
-                }
-                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
-                {
-                    turnRight();
-                }
-                else
-                {
-                    turnLeft();
-                }
-            }
-            else
-            {
-                if (currentLeft > DISTANCE && currentRight > DISTANCE)
-                {
-                        switch (car.turn)
-                        {
-                            case RIGHT:
-                            turnLeft();
-                            break;
-                            case LEFT:
-                            turnRight();
-                            break;
-                            default:
-                            turnRight();
-                        }
-                }
-                else if(currentLeft <= DISTANCE && currentRight <= DISTANCE)
-                {
-                    moveBackward();
-                }
-                else if (currentLeft <= DISTANCE && currentRight > DISTANCE)
-                {
-                    turnRight();
-                }
-                else
-                {
-                    turnLeft();
-                }
-            }
-        }
-
-
-
+    switch(car.turn){
+    case NONE:
+        moveForward();
+        break;
+    case LEFT:
+        turnLeft();
+       break;
+    case RIGHT:
+        turnRight();
+        break;
+    case BACK:
+        moveBackward();
+        break;
+    default:
+        stop();
+    }
+    switch(car.direction){
+        case UP:    car.y++;
+        case DOWN:  car.y--;
+        case LEFT:  car.x--;
+        case RIGHT: car.x++;
+    }
 }
