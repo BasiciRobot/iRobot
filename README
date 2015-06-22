@@ -49,10 +49,8 @@ ISSIUE:
 The current overhead will damage the board.
 Using two port to supply the power.
 
-<<<<<<< HEAD
 6/18
 Revise APIs to make them comprehensive and easy for future use.
-=======
 6/19
 For mopplayer - turn left and right
 Done.
@@ -60,5 +58,4 @@ Done.
 ISSIUE:
 This car is poor to perform turning direction perfectly
 ,due to its hardware design.
->>>>>>> eec5ce3bfbff82e4b0ff530f5c750bbb1ffbeec0
 

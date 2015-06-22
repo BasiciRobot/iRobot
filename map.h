@@ -1,17 +1,17 @@
 
 #define UNKNOWN 0
-#define UPFREE    1 << 0
-#define DOWNFREE  1 << 1
-#define LEFTFREE  1 << 2
-#define RIGHTFREE 1 << 3
+#define UPFREE    0x01
+#define DOWNFREE  0x02
+#define LEFTFREE  0x04
+#define RIGHTFREE 0x08
 #define UPWALL    ~UPFREE
 #define DOWNWALL  ~DOWNFREE
 #define LEFTWALL  ~LEFTFREE
 #define RIGHTWALL ~RIGHTFREE
-#define FREE      1 << 4
+#define FREE      0x10
 #define NOFREE    ~FREE
-#define FULL      ~(1 << 5)
-#define VISITED   1 << 6
+#define FULL      ~(0x20)
+#define VISITED   0x40
 enum{
     NONE,
     UP,

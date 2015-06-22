@@ -9,6 +9,9 @@ void planpath(){
                 else 
                     car.mode = SECONDSWEEP;
             }
+            else{
+                car.turn = NONE;
+            }
         }
         else if(car.direction == DOWN) { 
             if(!(car.map[car.x][car.y] & DOWNFREE)) {
@@ -18,6 +21,9 @@ void planpath(){
                 }
                 else
                     car.mode = SECONDSWEEP;
+            }
+            else{
+                car.turn = NONE;
             }   
         }
         else if(car.direction == RIGHT) {

@@ -1,0 +1,56 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BACK	map.h	/^    BACK$/;"	e	enum:__anon1
+CAR	map.h	/^struct CAR{$/;"	s
+CLEAN	map.h	/^    CLEAN$/;"	e	enum:__anon2
+DISTANCE	test.c	8;"	d	file:
+DOWN	map.h	/^    DOWN,$/;"	e	enum:__anon1
+DOWNFREE	map.h	4;"	d
+DOWNWALL	map.h	8;"	d
+FIRSTSWEEP	map.h	/^    FIRSTSWEEP,$/;"	e	enum:__anon2
+FREE	map.h	11;"	d
+FULL	map.h	12;"	d
+LEFT	map.h	/^    LEFT,$/;"	e	enum:__anon1
+LEFTFREE	map.h	5;"	d
+LEFTWALL	map.h	9;"	d
+NONE	map.h	/^    NONE,$/;"	e	enum:__anon1
+RIGHT	map.h	/^    RIGHT,$/;"	e	enum:__anon1
+RIGHTFREE	map.h	6;"	d
+RIGHTWALL	map.h	10;"	d
+SECONDSWEEP	map.h	/^    SECONDSWEEP,$/;"	e	enum:__anon2
+UNKNOWN	map.h	2;"	d
+UP	map.h	/^    UP,$/;"	e	enum:__anon1
+UPFREE	map.h	3;"	d
+UPWALL	map.h	7;"	d
+VISITED	map.h	13;"	d
+car	map.h	/^static CAR car;$/;"	v
+count	test.c	/^unsigned int count=0, direction=0;$/;"	v
+currentLFront	test.c	/^unsigned int currentRight, currentRFront, currentLeft, currentLFront;$/;"	v
+currentLeft	test.c	/^unsigned int currentRight, currentRFront, currentLeft, currentLFront;$/;"	v
+currentRFront	test.c	/^unsigned int currentRight, currentRFront, currentLeft, currentLFront;$/;"	v
+currentRight	test.c	/^unsigned int currentRight, currentRFront, currentLeft, currentLFront;$/;"	v
+detect	detect.h	/^void detect(){$/;"	f
+direction	map.h	/^    char direction;     \/\/ 0:North 1:East 2:South 3:West$/;"	m	struct:CAR
+direction	test.c	/^unsigned int count=0, direction=0;$/;"	v
+distance	detect.h	/^unsigned int distance(unsigned int t)$/;"	f
+init	test.c	/^void init(){$/;"	f
+main	test.c	/^int main (void)$/;"	f
+map	map.h	/^    char map[256][256]; \/\/static declartion for only convenience, change to dynamic one later$/;"	m	struct:CAR
+mode	map.h	/^    char mode;          \/\/ running mode,0:first run$/;"	m	struct:CAR
+move	move.h	/^void move(){$/;"	f
+moveBackward	move.h	/^void moveBackward()$/;"	f
+moveForward	move.h	/^void moveForward()$/;"	f
+planpath	planpath.h	/^void planpath(){$/;"	f
+pulseIn	detect.h	/^unsigned int pulseIn(int pin, unsigned int timeout)$/;"	f
+stop	move.h	/^void stop()$/;"	f
+trigger	detect.h	/^void trigger(int pin)$/;"	f
+turn	map.h	/^    char turn;          $/;"	m	struct:CAR
+turnLeft	move.h	/^void turnLeft()$/;"	f
+turnRight	move.h	/^void turnRight()$/;"	f
+updatemap	updatemap.h	/^void updatemap(){$/;"	f
+x	map.h	/^    int x;   \/\/ car position$/;"	m	struct:CAR
+y	map.h	/^    int y;$/;"	m	struct:CAR
