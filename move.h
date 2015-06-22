@@ -63,23 +63,28 @@ void move(){
     switch(car.turn){
     case NONE:
         moveForward();
-        continue;
+        delay(100);
+        break;
     case LEFT:
         turnLeft();
-        continue;
+        delay(3000);
+        break;
     case RIGHT:
         turnRight();
-        continue;
+        delay(3000);
+        break;
     case BACK:
         moveBackward();
-        continue;
+        delay(100);
+        break;
     default:
         stop();
+        delay(50);
     }
     switch(car.direction){
-        case UP:    car.y++;continue;
-        case DOWN:  car.y--;continue;
-        case LEFT:  car.x--;continue;
+        case UP:    car.y++;break;
+        case DOWN:  car.y--;break;
+        case LEFT:  car.x--;break;
         case RIGHT: car.x++;
         
     }

@@ -38,7 +38,7 @@ typedef struct CAR{
 
 static CAR car;
 
-const unsigned int unit = 240;
+const unsigned int unit = 360;
 
 void init();
 void detect();

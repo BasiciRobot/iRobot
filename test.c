@@ -66,7 +66,6 @@ int main (void)
         else if(times == 4) times = 0;
         else times++;
         printf("distRight: %4d distRFront: %4d distLeft: %4d distLFront: %4d count zero: %4d\n",currentRight, currentRFront, currentLeft, currentLFront,count);
-        delay(100 + start - millis()); 
     }
     return 0 ;
 }
