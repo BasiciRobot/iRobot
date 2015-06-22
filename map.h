@@ -19,13 +19,13 @@ enum{
     LEFT,
     RIGHT,
     BACK
-}
+};
 enum{
     FIRSTSWEEP,
     SECONDSWEEP,
     CLEAN
-}
-struct CAR{
+};
+typedef struct CAR{
     int x;   // car position
     int y;
     //const float sizeX;  // car size
@@ -34,7 +34,7 @@ struct CAR{
     char direction;     // 0:North 1:East 2:South 3:West
     char turn;          
     char map[256][256]; //static declartion for only convenience, change to dynamic one later
-};
+}CAR;
 
 static CAR car;
 

@@ -36,22 +36,38 @@ unsigned int distance(unsigned int t)
 
 void detect(){
 
-    unsigned int timeLFront,timeRFront,timeLeft,timeRight;
+    unsigned int timeLFront,timeRFront,timeLeft,timeRight,temp,temp1,temp2,temp3;
     trigger(0);
     timeLFront = pulseIn(1,50000);
-    currentLFront = distance(timeLFront);
+    temp = distance(timeLFront);
+    if(temp >0)
+     {
+         currentLFront=temp;
+     }
 
     trigger(2);
     timeRFront = pulseIn(3,50000);
-    currentRFront = distance(timeRFront);
+    temp1 = distance(timeRFront);
+     if(temp1 >0)
+     {
+         currentRFront=temp1;
+     }
 
     trigger(4);
     timeLeft = pulseIn(5,50000);
-    currentLeft = distance(timeLeft);
+    temp2 = distance(timeLeft);
+    if(temp2 >0)
+     {
+         currentLeft=temp2;
+     }
 
     trigger(6);
     timeRight = pulseIn(7,50000);
-    currentRight = distance(timeRight);
+    temp3 = distance(timeRight);
+    if(temp3 >0)
+     {
+         currentRight=temp3;
+     }
 }
 
 

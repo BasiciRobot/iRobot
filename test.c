@@ -1,3 +1,8 @@
+#include <stdio.h>
+unsigned int count=0, direction=0;
+unsigned int currentRight, currentRFront, currentLeft, currentLFront;
+unsigned int distLFront,distRFront,distLeft,distRight; 
+
 #include <wiringPi.h>
 #include <stdlib.h>
 #include "map.h"
@@ -7,8 +12,6 @@
 #include "updatemap.h"
 #define DISTANCE 360
 
-unsigned int count=0, direction=0;
-unsigned int currentRight, currentRFront, currentLeft, currentLFront;
 /*dimension
 Width: 16 cm
 Length: 24 cm
@@ -39,9 +42,10 @@ void init(){
     stop();
     car.x=1;
     car.y=1;
-    mode=0;
+    car.mode=0;
     car.direction = UP;
     car.turn = NONE;
+    int i,j;
     for(i=0;i<256;i++)
         for(j=0;j<256;j++)car.map[i][j]=UNKNOWN;
 }
@@ -61,7 +65,7 @@ int main (void)
         }
         else if(times == 4) times = 0;
         else times++;
-        printf("distLFront: %d distRFront: %d distLeft: %d distRight: %d count zero: %d\n",distLFront,distRFront,distLeft,distRight,count);
+        printf("distRight: %4d distRFront: %4d distLeft: %4d distLFront: %4d count zero: %4d\n",currentRight, currentRFront, currentLeft, currentLFront,count);
         delay(100 + start - millis()); 
     }
     return 0 ;
