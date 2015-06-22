@@ -65,7 +65,8 @@ int main (void)
         }
         else if(times == 4) times = 0;
         else times++;
-        printf("distRight: %4d distRFront: %4d distLeft: %4d distLFront: %4d count zero: %4d\n",currentRight, currentRFront, currentLeft, currentLFront,count);
-    }
+        printf("distRight: %4d distRFront: %4d distLeft: %4d distLFront: %4d count zero: %4d",currentRight, currentRFront, currentLeft, currentLFront,count);
+    	printf("   map[%d][%d]=%x,mapDIR=%d,mapTURN=%d \n",car.x,car.y,car.map[car.x][car.y],car.direction,car.turn);
+	}
     return 0 ;
 }
