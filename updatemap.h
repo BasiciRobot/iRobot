@@ -1,6 +1,5 @@
 void updatemap(){
 	
-    unsigned int unit = 1;
 	
 	unsigned int Leftunit = currentLeft/unit;
 	unsigned int Rightunit = currentRight/unit;
@@ -19,16 +18,21 @@ if(car.direction == UP){
 	
 	if(Leftunit==0 && currentLeft!=0)
 		car.map[car.x][car.y] &= LEFTWALL;
+                car.map[car.x-1][car.y] &= NOFREE; 
 	else
 		car.map[car.x][car.y] |= LERTFREE;
+                car.map[car.x-1][car.y] |= FREE;
 	
 	if(Rightunit==0 && currentRight!=0)
 		car.map[car.x][car.y] &= RIGHTWALL;
+                car.map[car.x+1][car.y] &= NOFREE
 	else
 		car.map[car.x][car.y] |= RIGHTFREE;
+                car.map[car.x+1][car.y] |= FREE; 
 	
 	if(Frontunit==0 && (currentLFront!=0 || currentRFront!=0))
 		car.map[car.x][car.y] &= UPWALL;
+                car.map[car.x][car.y+1] &= NOFREE;
 	else
 		car.map[car.x][car.y] |= UPFREE;I
 

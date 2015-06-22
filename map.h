@@ -9,6 +9,7 @@
 #define LEFTWALL  ~LEFTFREE
 #define RIGHTWALL ~RIGHTFREE
 #define FREE      1 << 4
+#define NOFREE    ~FREE
 #define FULL      ~(1 << 5)
 #define VISITED   1 << 6
 enum{
@@ -36,6 +37,8 @@ struct CAR{
 };
 
 static CAR car;
+
+const unsigned int unit = 240;
 
 void init();
 void detect();
